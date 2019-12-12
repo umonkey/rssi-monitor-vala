@@ -42,6 +42,7 @@ public class Application : Window
             // TODO: abort
         }
 
+        tray.set_label("haha", "wtf");
         tray.set_status(IndicatorStatus.ACTIVE);
         tray.set_attention_icon("indicator-messages-new");
 
@@ -68,14 +69,15 @@ public class Application : Window
 
     public void run()
     {
-        // this.show_all();
-
-        this.update_rssi();
+        GLib.Timeout.add(500, () => {
+            this.check_rssi();
+            return true; // continue
+        });
 
         Gtk.main();
     }
 
-    private void update_rssi()
+    private void check_rssi()
     {
         var session = new Soup.Session();
         var message = new Soup.Message("GET", rssi_url);
@@ -94,7 +96,42 @@ public class Application : Window
             rssi = -2;
         }
 
-        Posix.stdout.printf("RSSI = %d\n", rssi);
+        update_rssi_label();
+    }
+
+    private void update_rssi_label()
+    {
+        if (rssi == -2) {
+            tray.set_label("No data", "rssimon");
+            tray.set_icon("gsm-3g-none");
+        }
+
+        else if (rssi == -1) {
+            tray.set_label("No signal", "rssimon");
+            tray.set_icon("gsm-3g-none");
+        }
+
+        else {
+            int dbm = -113 + rssi * 2;
+            string label = "%d dBm (%d)".printf(dbm, rssi);
+            tray.set_label(label, "rssimon");
+
+            if (rssi < 4) {
+                tray.set_icon("gsm-3g-low");
+            }
+
+            else if (rssi < 7) {
+                tray.set_icon("gsm-3g-medium");
+            }
+
+            else if (rssi < 9) {
+                tray.set_icon("gsm-3g-high");
+            }
+
+            else {
+                tray.set_icon("gsm-3g-full");
+            }
+        }
     }
 
     public static int main(string[] args)
