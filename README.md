@@ -12,6 +12,7 @@ Ubuntu:
 
 ```bash
 $ make depends-ubuntu build install
+rssimon &
 ```
 
 
