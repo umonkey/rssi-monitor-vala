@@ -1,4 +1,9 @@
 /**
+ * RSSI tracker for the indicator applet.
+ *
+ * Reads RSSI value from an HTTP endpoint, displays value and proper 3G icon
+ * in the tray.  Has a menu item to open detailed info (another URL).
+ *
  * Inspiration: http://bazaar.launchpad.net/~indicator-applet-developers/libappindicator/trunk.15.10/view/head:/bindings/vala/examples/indicator-example.vala
  **/
 
