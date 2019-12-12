@@ -11,3 +11,6 @@ install: build
 
 rssimon: src/main.vala
 	valac -o $@ --pkg gtk+-3.0 --pkg appindicator3-0.1 --pkg posix --pkg libsoup-2.4 $<
+
+run: build
+	./rssimon
