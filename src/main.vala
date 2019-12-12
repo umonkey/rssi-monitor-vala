@@ -4,6 +4,9 @@
 
 using Gtk;
 using AppIndicator;
+using Posix;
+
+const string details_command = "x-www-browser http://traffic.umonkey.net/modem.php";
 
 public class Application : Window
 {
@@ -41,8 +44,7 @@ public class Application : Window
 
         var item1 = new Gtk.MenuItem.with_label("Open details");
         item1.activate.connect(() => {
-            // TODO: run the browser.
-            tray.set_status(IndicatorStatus.ATTENTION);
+            Posix.system(details_command);
         });
         item1.show();
         menu.append(item1);
