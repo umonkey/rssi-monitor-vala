@@ -1,0 +1,15 @@
+<schemalist>
+  <schema id="net.umonkey.rssimon" path="/net/umonkey/rssimon/" gettext-domain="rssimon">
+    <key name="rssi-url" type="s">
+      <default l10n="messages">"http://traffic.umonkey.net/rssi.php"</default>
+      <summary>RSSI endpoint URL</summary>
+      <description>URL that responds with a simple number.</description>
+    </key>
+
+    <key name="details-command" type="s">
+      <default>"x-www-browser http://traffic.umonkey.net/modem.php"</default>
+      <summary>Shell command to open the details</summary>
+      <description>Usually a web page with detailed statistics and current modem state.</description>
+    </key>
+  </schema>
+</schemalist>

@@ -9,12 +9,7 @@
 
 using Gtk;
 using AppIndicator;
-using Posix;
 using Soup;
-
-const string details_command = "x-www-browser http://traffic.umonkey.net/modem.php";
-
-const string rssi_url = "http://traffic.umonkey.net/rssi.php";
 
 public class Application : Window
 {
@@ -54,7 +49,7 @@ public class Application : Window
 
         var item1 = new Gtk.MenuItem.with_label("Open details");
         item1.activate.connect(() => {
-            Posix.system(details_command);
+            Posix.system(this.get_details_command());
         });
         item1.show();
         menu.append(item1);
@@ -83,6 +78,8 @@ public class Application : Window
 
     private void check_rssi()
     {
+        var rssi_url = this.get_rssi_url();
+
         var session = new Soup.Session();
         var message = new Soup.Message("GET", rssi_url);
 
@@ -103,6 +100,9 @@ public class Application : Window
         update_rssi_label();
     }
 
+    /**
+     * Updates the tray icon according to this.rssi.
+     **/
     private void update_rssi_label()
     {
         if (rssi == -2) {
@@ -136,6 +136,38 @@ public class Application : Window
                 tray.set_icon("gsm-3g-full");
             }
         }
+    }
+
+    /**
+     * Returns the URL to fetch RSSI value from.
+     *
+     * Read it anew to avoid restarting the application after changing
+     * the settings.
+     *
+     * @return string
+     **/
+    private string get_rssi_url()
+    {
+        var settings = new GLib.Settings("net.umonkey.rssimon");
+        var url = settings.get_string("rssi-url");
+        // stdout.printf("url = %s\n", url);
+        return url;
+    }
+
+    /**
+     * Returns the command to open detailed 3G status.
+     *
+     * Read it anew to avoid restarting the application after changing
+     * the settings.
+     *
+     * @return string
+     **/
+    private string get_details_command()
+    {
+        var settings = new GLib.Settings("net.umonkey.rssimon");
+        var command = settings.get_string("details-command");
+        stdout.printf("command = %s\n", command);
+        return command;
     }
 
     public static int main(string[] args)
