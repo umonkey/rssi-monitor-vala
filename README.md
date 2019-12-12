@@ -18,5 +18,5 @@ rssimon &
 
 ## TODO
 
-- [ ] Read URLs from the registry.
+- [x] Read URLs from [GSettings](https://wiki.gnome.org/Projects/Vala/GSettingsSample).
 - [ ] Provide a deb package.
