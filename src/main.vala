@@ -41,15 +41,14 @@ public class Application : Window
 
     public void create_indicator()
     {
-        tray = new Indicator(this.title, "indicator-messages", IndicatorCategory.APPLICATION_STATUS);
+        tray = new Indicator(this.title, "gsm-3g-none", IndicatorCategory.APPLICATION_STATUS);
 
         if (!(tray is Indicator)) {
             // TODO: abort
         }
 
-        tray.set_label("haha", "wtf");
         tray.set_status(IndicatorStatus.ACTIVE);
-        tray.set_attention_icon("indicator-messages-new");
+        tray.set_label("No signal", "rssimon");
 
         var menu = new Gtk.Menu();
 
