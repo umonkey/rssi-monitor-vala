@@ -5,12 +5,17 @@
 using Gtk;
 using AppIndicator;
 using Posix;
+using Soup;
 
 const string details_command = "x-www-browser http://traffic.umonkey.net/modem.php";
+
+const string rssi_url = "http://traffic.umonkey.net/rssi.php";
 
 public class Application : Window
 {
     private Indicator tray;
+
+    private int rssi;
 
     public Application()
     {
@@ -65,7 +70,31 @@ public class Application : Window
     {
         // this.show_all();
 
+        this.update_rssi();
+
         Gtk.main();
+    }
+
+    private void update_rssi()
+    {
+        var session = new Soup.Session();
+        var message = new Soup.Message("GET", rssi_url);
+
+        session.send_message(message);
+
+        /*
+        message.response_headers.foreach((name, val) => {
+            Posix.stdout.printf("%s = %s\n", name, val);
+        });
+        */
+
+        if (message.status_code == 200) {
+            rssi = int.parse((string)message.response_body.data);  // TODO: error checking
+        } else {
+            rssi = -2;
+        }
+
+        Posix.stdout.printf("RSSI = %d\n", rssi);
     }
 
     public static int main(string[] args)
