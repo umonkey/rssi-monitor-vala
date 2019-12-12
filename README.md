@@ -5,7 +5,7 @@ This is a simple applet that displays 3G signal strength (RSSI) in the system tr
 It reads the RSSI value using a remote HTTP endpoint, displays the raw value,
 dBm and a proper icon with the bars.  The value is updated twice a second.
 
-![Screenshot](https://user-images.githubusercontent.com/16797/70741248-ea4dfc00-1d2b-11ea-8b0b-e96a8acd8f00.png)
+![Screenshot](https://user-images.githubusercontent.com/16797/70741378-30a35b00-1d2c-11ea-9d60-16190c5bc9c3.png)
 
 
 ## Installation
